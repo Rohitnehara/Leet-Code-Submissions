@@ -34,42 +34,43 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    class Pair{
-        int curr;
+    class Pair {
         int prev;
-        Pair(int curr,int prev){
-            this.curr=curr;
+        int curr;
+        Pair(int prev,int curr){
             this.prev=prev;
+            this.curr=curr;
         }
-    }
-    public boolean detect (int V,int src, ArrayList<ArrayList<Integer>> adj,boolean []vis){
-        Queue<Pair> q = new LinkedList<>();
-        vis[src]=true;
-        q.add(new Pair(src,-1));
-        while(q.size()>0){
-            Pair p = q.remove();
-            for(int nodes : adj.get(p.curr)){
-                if(vis[nodes]==false){
-                    q.add(new Pair(nodes,p.curr));
-                    vis[nodes]=true;
-                }else if(nodes !=p.prev){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean [] vis= new boolean[V];
-        for(int i =0;i<V;i++){
+        boolean []vis = new boolean[V];
+        for(int i=0;i<V;i++){
             if(vis[i]==false){
-                if(detect(V,i,adj,vis)){
-                    return true;
+                if(detectCycle(adj,i,vis))
+            return true;
+            }
+            
+        }
+        return false;
+    }
+    public boolean detectCycle( ArrayList<ArrayList<Integer>> adj,int node,boolean []vis){
+        Queue<Pair> q= new LinkedList<>();
+        q.add(new Pair(-1,node));
+        vis[node]=true;
+        while(q.size()>0){
+            Pair curP = q.remove();
+            for(int conNodes : adj.get(curP.curr )){
+                if(vis[conNodes]==false){
+                    q.add(new Pair(curP.curr,conNodes));
+                    vis[conNodes]=true;
+                } else{
+                    if(curP.prev !=conNodes){
+                        return true;
+                    }
                 }
             }
         }
         return false;
-       
     }
 }
