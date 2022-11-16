@@ -43,9 +43,36 @@ class Solution{
         }
         int tar = sum/2;
         Boolean [][]t = new Boolean[N+1][tar+1];
-        Boolean finalAns= isEqual(N,tar,arr,t);
+        Boolean finalAns= isEqualTab(N,tar,arr,t);
         if(finalAns) return 1;
         else return 0;
+    }
+     public static Boolean isEqualTab(int N,int sum, int arr[],Boolean [][]t){
+        
+        for(int i =0;i<t.length;i++){
+            for(int j =0;j<t[0].length;j++){
+                if(j==0){
+                    t[i][j]=true;
+                }else if(i==0){
+                    t[i][j]=false;;
+                }
+            }
+        }
+         for(int i =1;i<t.length;i++){
+            for(int j =1;j<t[0].length;j++){
+                if(arr[i-1]<=j){
+                  Boolean ans1 = t[i-1][j-arr[i-1]];
+                  Boolean ans2= t[i-1][j]; 
+                   t[i][j]=ans1||ans2;
+                }else {
+                    t[i][j] = t[i-1][j];
+                }
+                
+               
+            }
+        }
+        return t[N][sum];
+       
     }
     public static Boolean isEqual(int N,int sum, int arr[],Boolean [][]t){
         if(sum<0 || N<=0){
