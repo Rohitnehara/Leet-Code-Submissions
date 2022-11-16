@@ -42,7 +42,7 @@ class Solution{
             return 0;
         }
         int tar = sum/2;
-        Boolean [][]t = new Boolean[N+1][tar+1];
+        Boolean [][]t = new Boolean[N][tar+1];
         Boolean finalAns= isEqual(N,tar,arr,t);
         if(finalAns) return 1;
         else return 0;
