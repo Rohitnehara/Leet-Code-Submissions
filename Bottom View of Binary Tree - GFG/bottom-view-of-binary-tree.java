@@ -120,40 +120,39 @@ class GfG {
 class Solution
 {
     //Function to return a list containing the bottom view of the given tree.
-    static class Pair {
+    class Pair{
         Node node;
-        int level;
         int hd;
-        Pair(Node node,int level,int hd){
+        int level;
+        Pair(Node node,int hd,int level){
             this.node=node;
-            this.level =level;
-            this.hd = hd;
+            this.hd=hd;
+            this.level=level;
         }
     }
     public ArrayList <Integer> bottomView(Node root)
     {
-        ArrayList<Integer>ans = new ArrayList<Integer>();
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        Queue<Pair> q = new ArrayDeque<>();
+        // Code here'
+        HashMap<Integer,Integer>hm=new HashMap<>();
+        Queue<Pair>q=new ArrayDeque<>();
         q.add(new Pair(root,0,0));
-        
-        
         while(q.size()>0){
-            Pair p = q.remove();
+            Pair p=q.remove();
             hm.put(p.hd,p.node.data);
             if(p.node.left!=null){
-                q.add(new Pair(p.node.left,p.level+1,p.hd-1));
+                q.add(new Pair(p.node.left,p.hd-1,p.level+1));
             }
             if(p.node.right!=null){
-                q.add(new Pair(p.node.right,p.level+1,p.hd+1));
+                q.add(new Pair(p.node.right,p.hd+1,p.level+1));
             }
         }
-        ArrayList<Integer>al =  new ArrayList<>();
-      //  ArrayList<Integer>ans =  new ArrayList<>();
-        al.addAll(hm.keySet());
-        Collections.sort(al);
-        for(int i =0;i<al.size();i++){
-            ans.add(hm.get(al.get(i)));
+        ArrayList<Integer>li=new ArrayList<>();
+        li.addAll(hm.keySet());
+        Collections.sort(li);
+        
+        ArrayList<Integer>ans=new ArrayList<>();
+        for(int i=0;i<li.size();i++){
+            ans.add(hm.get(li.get(i)));
         }
         
         return ans;
